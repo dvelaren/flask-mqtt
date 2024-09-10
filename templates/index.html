@@ -1,0 +1,81 @@
+{% extends 'layout.html' %} {% block content %}
+<div class="container">
+  <form>
+    <div class="row">
+      <div class="col">
+        <label id="led-red-range-lbl" for="led-range" class="form-label">LED RED</label>
+        <input
+          type="range"
+          class="form-range"
+          min="0"
+          max="100"
+          id="led-red-range"
+          value="0"
+        />
+      </div>
+      <div class="col">
+        <label id="led-green-range-lbl" for="led-range" class="form-label">LED GREEN</label>
+        <input
+          type="range"
+          class="form-range"
+          min="0"
+          max="100"
+          id="led-green-range"
+          value="0"
+        />
+      </div>
+      <div class="col">
+        <label id="led-blue-range-lbl" for="led-range" class="form-label">LED BLUE</label>
+        <input
+          type="range"
+          class="form-range"
+          min="0"
+          max="100"
+          id="led-blue-range"
+          value="0"
+        />
+      </div>
+    </div>
+  </form>
+</div>
+{% endblock %} {% block scripts %}
+<script>
+  function updateLedValue(ledId, ledLabel, value) {
+    $(`#${ledId}-range-lbl`).text(`${ledLabel}: ${value}`);
+    $.ajax({
+      url: $SCRIPT_ROOT + "/",
+      type: "POST",
+      data: JSON.stringify({[ledId]: parseFloat(value)}),
+      contentType: "application/json;charset=UTF-8",
+      dataType: "json",
+      success: function (data) {
+        console.log(data);
+      },
+    });
+  }
+  $("#led-red-range").on("input", function () {
+    updateLedValue("led-red", "LED RED", $(this).val());
+  });
+  $("#led-green-range").on("input", function () {
+    updateLedValue("led-green", "LED GREEN", $(this).val());
+  });
+  $("#led-blue-range").on("input", function () {
+    updateLedValue("led-blue", "LED BLUE", $(this).val());
+  });
+  /*
+  $("#led-range").on("input", function () {
+    $("#led-range-lbl").text("LED RED: " + $(this).val());
+    console.log($(this).val());
+    $.ajax({
+      url: $SCRIPT_ROOT + "/",
+      type: "POST",
+      data: JSON.stringify({"led-red": parseFloat($(this).val())}),
+      contentType: "application/json;charset=UTF-8",
+      dataType: "json",
+      success: function (data) {
+        console.log(data);
+      },
+    });
+  });*/
+</script>
+{% endblock %}

@@ -1,0 +1,11 @@
+#led-red-range::-webkit-slider-thumb {
+    background-color: red;
+}
+
+#led-green-range::-webkit-slider-thumb {
+    background-color: green;
+}
+
+#led-blue-range::-webkit-slider-thumb {
+    background-color: blue;
+}
